@@ -1,3 +1,26 @@
+from room import Room
+from player import Player
+from world import World
+# from path import getPath
+import random
+from ast import literal_eval
+
+# Load world
+world = World()
+
+
+# You may uncomment the smaller graphs for development and testing purposes.
+# map_file = "maps/test_line.txt"
+# map_file = "maps/test_cross.txt"
+# map_file = "maps/test_loop.txt"
+# map_file = "maps/test_loop_fork.txt"
+map_file = "maps/main_maze.txt"
+
+# Loads the map into a dictionary
+room_graph = literal_eval(open(map_file, "r").read())
+world.load_graph(room_graph)
+
+
 def pathSort(e):
     return e.weight
 
@@ -119,10 +142,10 @@ def getPath(world):
     posWeight = 0
     visited = set()
     unwind = Stack()
-    while len(visited) < len(world.rooms):
 
+    while len(visited) < len(world.rooms):
+        noUnwind = False
         paths = []
-        p = None
         if pathStack.size():
             p = pathStack.pop()
             pos = p.b
@@ -152,6 +175,11 @@ def getPath(world):
                     visited.add(rm)
             elif p.weight > posWeight:
                 pathStack.push(p)
+                noUnwind = True
         if unwind.size():
             path += unwind.pop()
     return path
+
+
+path = getPath(world)
+print(path, len(path))

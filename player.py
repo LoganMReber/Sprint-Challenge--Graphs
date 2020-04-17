@@ -4,10 +4,10 @@ class Player:
 
     def travel(self, direction, show_rooms=False):
         next_room = self.current_room.get_room_in_direction(direction)
-        print(f"{self.current_room.id}:{direction}", end=' ')
         if next_room is not None:
             self.current_room = next_room
             if (show_rooms):
                 next_room.print_room_description(self)
         else:
-            print()
+            pass
+            # print(f"You cannot move in that direction.")
